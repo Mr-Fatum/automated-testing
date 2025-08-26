@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions as Exp_Cond
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 import time
@@ -103,13 +103,13 @@ try:
 
     # Ждем и кликаем кнопку Добавить
     button = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH, "//*[@id=\"gwtAddSrmPurchase\"]"))
+        Exp_Cond.element_to_be_clickable((By.XPATH, "//*[@id=\"gwtAddSrmPurchase\"]"))
     )
     button.click()
 
     # Ждем появления dropdown метода закупки
     dropdown = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//select[.//option[contains(text(), 'Закупка')]]"))
+        Exp_Cond.presence_of_element_located((By.XPATH, "//select[.//option[contains(text(), 'Закупка')]]"))
     )
     dropdown.click()
     time.sleep(1)
@@ -126,7 +126,7 @@ try:
 
     # Настройка подписи предложения
     signature_dropdown = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located(
+        Exp_Cond.presence_of_element_located(
             (By.XPATH, "//td[contains(text(), 'Подпись предложения обязательна')]/following-sibling::td//select"))
     )
     signature_dropdown.click()
@@ -141,7 +141,7 @@ try:
 
     # Заполнение наименования закупки
     name_textarea = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable(
+        Exp_Cond.element_to_be_clickable(
             (By.XPATH, "//td[contains(text(), 'Наименование закупки')]/following-sibling::td//textarea"))
     )
     name_textarea.clear()
@@ -150,7 +150,7 @@ try:
 
     # Нажатие кнопки добавления
     add_button_submit = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.XPATH,
+        Exp_Cond.element_to_be_clickable((By.XPATH,
                                     "/html/body/div[9]/div/table/tbody/tr[2]/td[2]/div/div/table[2]/tbody/tr/td[1]/button/div/span[1]"))
     )
     add_button_submit.click()
@@ -158,7 +158,7 @@ try:
 
     # Добавление лота
     add_lot = WebDriverWait(driver, 15).until(
-        EC.element_to_be_clickable((By.XPATH, "//*[@id=\"Item.lots.holder.events.newInstanceForm_outer\"]"))
+        Exp_Cond.element_to_be_clickable((By.XPATH, "//*[@id=\"Item.lots.holder.events.newInstanceForm_outer\"]"))
     )
     add_lot.click()
     time.sleep(5)
@@ -172,13 +172,13 @@ try:
 
     # Ждем загрузки формы добавления лота
     WebDriverWait(driver, 15).until(
-        EC.presence_of_element_located((By.ID, "Item.lots.holder.events.newInstanceForm"))
+        Exp_Cond.presence_of_element_located((By.ID, "Item.lots.holder.events.newInstanceForm"))
     )
 
     # 1. Добавление имени лота
     print("Добавляем имя лота...")
     title_textarea = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.ID, "title"))
+        Exp_Cond.element_to_be_clickable((By.ID, "title"))
     )
     title_textarea.clear()
     title_textarea.send_keys("Автоматически созданный лот для тестирования")
@@ -187,7 +187,7 @@ try:
     # 2. Работа с чекбоксом невозможности определения цены
     print("Работаем с чекбоксом невозможности определения цены...")
     price_checkbox = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.ID, "priceInpossibility"))
+        Exp_Cond.element_to_be_clickable((By.ID, "priceInpossibility"))
     )
 
     if not price_checkbox.is_selected():
@@ -198,7 +198,7 @@ try:
 
     # Заполнение информации о цене
     WebDriverWait(driver, 5).until(
-        EC.visibility_of_element_located((By.ID, "priceInfoString"))
+        Exp_Cond.visibility_of_element_located((By.ID, "priceInfoString"))
     )
     price_info_textarea = driver.find_element(By.ID, "priceInfoString")
     price_info_textarea.clear()
@@ -211,7 +211,7 @@ try:
     # Поиск кнопки добавления через GWT компонент
     try:
         add_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable(
+            Exp_Cond.element_to_be_clickable(
                 (By.XPATH, "//div[contains(@class, 'gwt-PushButton') and contains(@title, 'добавить позицию лота')]"))
         )
         add_button.click()
@@ -232,13 +232,13 @@ try:
 
     # Ждем появления диалогового окна
     WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.XPATH, "//div[contains(@class, 'gwt-DialogBox')]"))
+        Exp_Cond.visibility_of_element_located((By.XPATH, "//div[contains(@class, 'gwt-DialogBox')]"))
     )
 
     # Используем поиск для быстрого нахождения элементов
     try:
         search_field = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "//input[@class='gwt-TextBox textField']"))
+            Exp_Cond.element_to_be_clickable((By.XPATH, "//input[@class='gwt-TextBox textField']"))
         )
         search_field.clear()
         search_field.send_keys("Говядина 1 сорт")
@@ -246,7 +246,7 @@ try:
 
         # Ищем элемент в дереве
         beef_1_sort = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), 'Говядина 1 сорт')]"))
+            Exp_Cond.element_to_be_clickable((By.XPATH, "//div[contains(text(), 'Говядина 1 сорт')]"))
         )
         beef_1_sort.click()
         print("Добавлена Говядина 1 сорт")
@@ -258,7 +258,7 @@ try:
         time.sleep(2)
 
         beef_highest_sort = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "//div[contains(text(), 'Говядина высший сорт')]"))
+            Exp_Cond.element_to_be_clickable((By.XPATH, "//div[contains(text(), 'Говядина высший сорт')]"))
         )
         beef_highest_sort.click()
         print("Добавлена Говядина высший сорт")
@@ -292,7 +292,7 @@ try:
     # 5. Сохранение выбора
     try:
         save_button = WebDriverWait(driver, 5).until(
-            EC.element_to_be_clickable((By.XPATH, "//button[.//span[contains(text(), 'Сохранить')]]"))
+            Exp_Cond.element_to_be_clickable((By.XPATH, "//button[.//span[contains(text(), 'Сохранить')]]"))
         )
         save_button.click()
         print("Элементы добавлены в лот")
@@ -327,7 +327,7 @@ try:
         meat1.send_keys("6")
 
         add_lot_button = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.ID, "commit_outer"))
+            Exp_Cond.element_to_be_clickable((By.ID, "commit_outer"))
         )
         add_lot_button.click()
         print("Лот успешно добавлен")
@@ -343,7 +343,7 @@ try:
 
         # Ждем кнопку создания извещения
         create_notification = WebDriverWait(driver, 20).until(
-            EC.element_to_be_clickable(
+            Exp_Cond.element_to_be_clickable(
                 (By.XPATH, "//*[contains(@id, 'rebiddingNoticeSubmit') or contains(text(), 'Извещение')]"))
         )
 
@@ -359,7 +359,7 @@ try:
 
         # Ждем загрузки формы
         WebDriverWait(driver, 20).until(
-            EC.presence_of_element_located((By.TAG_NAME, "body"))
+            Exp_Cond.presence_of_element_located((By.TAG_NAME, "body"))
         )
 
         # Проверяем iframe
@@ -370,7 +370,7 @@ try:
         try:
             # Чекбокс "Совпадает с датой"
             time_checkbox = WebDriverWait(driver, 15).until(
-                EC.element_to_be_clickable((By.XPATH,
+                Exp_Cond.element_to_be_clickable((By.XPATH,
                                             "//input[@type='checkbox' and (contains(@id, 'equalPublication') or contains(@name, 'equalPublication'))]"))
             )
             time_checkbox.click()
@@ -379,7 +379,7 @@ try:
             #
             # Кнопка сохранения
             safe_button = WebDriverWait(driver, 15).until(
-                EC.element_to_be_clickable((By.XPATH,
+                Exp_Cond.element_to_be_clickable((By.XPATH,
                                             "//*[@id=\"commit_outer\"]"))
             )
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -394,7 +394,7 @@ try:
             url = link.get_attribute("href")
             driver.get(url)
 
-            hide_menu = WebDriverWait(driver, 15).until(EC.element_to_be_clickable(
+            hide_menu = WebDriverWait(driver, 15).until(Exp_Cond.element_to_be_clickable(
                 (By.ID, "mainContent")
             ))
             hide_menu.click()
@@ -409,21 +409,21 @@ try:
             try:
                 # Вариант 1: По ID
                 send_button = WebDriverWait(driver, 15).until(
-                    EC.element_to_be_clickable(
+                    Exp_Cond.element_to_be_clickable(
                         (By.ID, "Item.confirmation.ConfirmationActionContainer.processSrmPurchaseMessageButton"))
                 )
             except:
                 try:
                     # Вариант 2: По классу и тексту
                     send_button = WebDriverWait(driver, 10).until(
-                        EC.element_to_be_clickable((By.XPATH,
+                        Exp_Cond.element_to_be_clickable((By.XPATH,
                                                     "//div[contains(@class, 'button')]//span[contains(text(), 'Отправить на размещение')]"))
                     )
                 except:
                     try:
                         # Вариант 3: По любому элементу с текстом
                         send_button = WebDriverWait(driver, 10).until(
-                            EC.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Отправить на размещение')]"))
+                            Exp_Cond.element_to_be_clickable((By.XPATH, "//*[contains(text(), 'Отправить на размещение')]"))
                         )
                     except:
                         print("Кнопка не найдена ни по одному из способов")
@@ -508,7 +508,7 @@ try:
 
     try:
         confirm_button = WebDriverWait(driver, 15).until(
-            EC.element_to_be_clickable((By.XPATH, "/html/body/div[9]/div/table/tbody/tr[2]/td[2]/div/div/table[2]/tbody/tr/td[1]/button"))
+            Exp_Cond.element_to_be_clickable((By.XPATH, "/html/body/div[9]/div/table/tbody/tr[2]/td[2]/div/div/table[2]/tbody/tr/td[1]/button"))
         )
         confirm_button.click()
     except Exception as e:
